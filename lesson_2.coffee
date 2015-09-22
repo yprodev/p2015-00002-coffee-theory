@@ -53,3 +53,68 @@ greeting2 = "Hi #{name2.toUpperCase()}!";
 #This doesn't work with ordinary quotes
 name2 = "userName";
 greeting2 = 'Hi #{name2.toUpperCase()}!';
+
+#Arrays
+array = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+
+#Some more interesting appearence of arrays (without commas after last index in the row)
+array = [
+	1, 2, 3
+	4, 5, 6
+	7, 8, 9
+]
+
+#Also we can quickly create ranges
+array2 = [0..10];
+
+#If we don't want to include last index (10) we need use three dottes
+array3 = [0...10];
+
+#Ranges can start at any point. In this case Coffee Script creates a loop, because of more then 20 indecies in the range.
+array4 = [20..90];
+
+#Ranges can be with negative numbers
+array5 = [-90..-80];
+
+#Also ranges can be reversed
+array6 = [20..5];
+
+#We can use slice method to an array
+array7 = [0..10];
+array7[5..10]; #slice
+array7[5...10]; #slice
+
+#We don't have to write the first element if it's zero
+array7[..8]; # slice
+
+#We shouldn't have to use the last element if we want to slice till the last element
+array7[5..];
+
+#Copying all array
+array7[..]; #in this case it will be only a link
+newArray = array7[..]; #in this case it will cope returned slice array
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
