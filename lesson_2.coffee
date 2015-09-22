@@ -94,7 +94,39 @@ array7[5..];
 array7[..]; #in this case it will be only a link
 newArray = array7[..]; #in this case it will cope returned slice array
 
+#Working with objects
+user =
+	name: "John Smith"
+	age: 22
+	status: "Web Developer"
+	skills:
+		html: 10
+		css: 9
+		javascript: 6
+		coffeescript: 4
 
+#Working with regular expressions
+visa = /^4[0-9]{12}(?:[0-9]{3})?$/
+mastercard = /^5[1-5][0-9]{14}$/
+americanExpress = /^3[47][0-9]{13}$/
+
+#Working with multiline expressions with comments. It is very usefull thing to comfortably read regular expressions.
+
+visa = ///
+	^4 # Starts with 4
+	[0-9]{12} # 12 random digits
+	(?:[0-9]{3})?$ # New cards have 16 digits
+///
+
+mastercard = ///
+	^5[1-5] # Starts with 51-55
+	[0-9]{14}$ # 14 random digits
+///
+
+americanExpress = ///
+	^3[47] # Starts with 34 or 37
+	[0-9]{13}$ # 13 random digits
+///
 
 
 
