@@ -3,7 +3,8 @@
 ###
 Multiline
 comment
-in coffee
+in
+coffee
 script
 ###
 
