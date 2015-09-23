@@ -67,6 +67,38 @@ user2 =
 range = [10..20]
 15 in range
 
+#It would be more difficult to understand but we can use this syntax to ckech an inequality
+country in ["Russia", "USA", "UK", "Germany"]
+### 
+  country === "Russia" || country === "USA" || country === "UK" || country === "Germany";
+###
+
+#We can also use existantial oparator. It will check data for Null or Undefined
+book = 3435
+open book # function like open(book);
+#It is more simple with if statement
+open book if book # if (book) { open(book); }
+#Now we will check Null
+open book if book? # if (book != null) {...}
+#But it will be different in this case
+open book if book isnt null # if (book !== null) {...}
+#We can use ? oparator to check typeof function
+open? book if book isnt null # if (typeof open === "function") { ... }
+#Using ? oparator in cases we want to add value to a property in an object but we don't know if there is a value of this property 
+object = {}
+object.speed ?= 100 # if (object.speed == null) { ... }
+# One more example
+this.age = config.age || 10 # In raw JavaScript
+# The same thing with checking for Null and Undefined
+this.age = config.age ? 10 # Here Coffee Script creates some more variables and avoids asking for the same variable twice
+
+#How to cut the next line?
+object.speed = object.speed || 100
+# The answere
+object.speed ||= 100 #Short variant
+object.speed or= 100 #Same thing object.speed || (object.speed = 100);
+object.speed &&= 100
+object.speed and= 100
 
 
 
