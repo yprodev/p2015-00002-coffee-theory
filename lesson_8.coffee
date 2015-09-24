@@ -10,11 +10,11 @@ class Vec2
 		@x = x ? 0
 		@y = y ? 0
 	add: (vec) ->
-		@x += vex.x
-		@y += vex.y
+		@x += vec.x
+		@y += vec.y
 		return @
 	copy: -> new Vec2 @x, @y
-	getRandom: (min, max) ->
+	@getRandom: (min, max) ->
 		new Vec2 do Math.random * (max - min) + min,
 			do Math.random * (max - min) + min
 
@@ -88,7 +88,7 @@ class ParticleSystem extends _Object
 		unless @particles.length > @maxParticles
 			for i in [0..@creationRate]
 				@addParticle {
-					loc: do loc.copy
+					loc: do @loc.copy
 					speed: Vec2.getRandom -@scatter, @scatter
 				}
 		particle.update ind for particle, ind in @particles when particle
@@ -112,11 +112,13 @@ class Particle extends _Object
 	draw: ->
 		@world.ctx.globalCompositeOperation = "lighter"
 		@world.ctx.globalAlpha = @life / @initialLife
-		do grad = @world.ctx.createRadialGradient @loc.x, @loc.y, 0, @loc.x, @loc.y, @size
+
+		grad = @world.ctx.createRadialGradient @loc.x, @loc.y, 0, @loc.x, @loc.y, @size
 		grad.addColorStop 0, "rgba(255, 255, 255,.5)"
 		grad.addColorStop .3, "rgba(255, 255, 255,.3)"
 		grad.addColorStop 1, "transparent"
 		@world.ctx.fillStyle = grad
+
 		do @world.ctx.beginPath
 		@world.ctx.arc @loc.x, @loc.y, @size, 0, 2 * Math.PI
 		do @world.ctx.fill
@@ -124,4 +126,22 @@ class Particle extends _Object
 #Main code ends
 
 
-canvas = document.getElementById 'canvas'
+test = new World document.getElementById 'canvas'
+window.test = test
+
+#We are creating two particle system in one place. It will looks if we have one but more complex particle system
+test.addObject ParticleSystem, {
+	loc: new Vec2 200, 400
+	particleSize: 30
+	particleLife: 55
+	scatter: .4
+}
+
+test.addObject ParticleSystem, {
+	loc: new Vec2 200, 400
+	particleSize: 6
+	particleLife: 80
+	scatter: 1.6
+}
+
+do test.start
