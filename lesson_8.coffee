@@ -32,9 +32,20 @@ class World
 			gravity: new Vec2 0, -.2
 
 		# Event Listener for tracking cursor on canvas
-		@canvas.addEventListener "mousemove", ((e) => )
+		@canvas.addEventListener "mousemove", ((e) =>
 			[@mouse.x, @mouse.y] = [e.offsetX, e.offsetY]
-		, no
+		), no
+
+		@canvas.addEventListener "mousewheel", ((e) =>
+			do e.preventDefault
+			if @controllable instanceof ParticleSystem
+				if e.shiftKey
+					@controllable.scatter = Math.max 0, @controllable.scatter - e.wheelDelta / 100
+				else if e.altKey
+					@controllable.particleSize = Math.max 0, @controllable.particleSize - e.wheelDelta / 100
+				else
+					@controllable.particleLife = Math.max 1, @controllable.particleLife - e.wheelDelta / 10
+		), no
 
 	addObject: (constructor, config, controllable) ->
 		config.world = @
@@ -150,13 +161,14 @@ test.addObject ParticleSystem, {
 	particleSize: 30
 	particleLife: 55
 	scatter: .4
-}, no
+}, on # on word sets our system to controllable
 
-test.addObject ParticleSystem, {
-	loc: new Vec2 200, 400
-	particleSize: 6
-	particleLife: 80
-	scatter: 1.6
-}
+#Another object but static (not controllable)
+# test.addObject ParticleSystem, {
+# 	loc: new Vec2 200, 400
+# 	particleSize: 6
+# 	particleLife: 80
+# 	scatter: 1.6
+# }
 
 do test.start
