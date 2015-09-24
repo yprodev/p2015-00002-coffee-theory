@@ -25,12 +25,21 @@ class World
 		@canvasHeight = @canvas.height = 500
 
 		@objects = []
+		@controllable = {} # link to an object we need to control
+		@mouse = new Vec2 @canvasWidth / 2, @canvasHeight / 2
+
 		@params =
 			gravity: new Vec2 0, -.2
 
-	addObject: (constructor, config) ->
+		# Event Listener for tracking cursor on canvas
+		@canvas.addEventListener "mousemove", ((e) => )
+			[@mouse.x, @mouse.y] = [e.offsetX, e.offsetY]
+		, no
+
+	addObject: (constructor, config, controllable) ->
 		config.world = @
 		obj = new constructor config
+		do obj.setControllable if controllable
 		@objects.push obj
 
 	removeObject: (index) -> @objects.splice index, 1
@@ -66,6 +75,12 @@ class _Object
 		@loc.y < -threshold or
 		@loc.x > @world.canvasWidth + threshold or
 		@loc.x < -threshold
+
+	#Method that makes our object controllable
+	setControllable: ->
+		@world.controllable = @
+		@loc = @world.mouse
+
 
 class ParticleSystem extends _Object
 	constructor: (config) ->
@@ -135,7 +150,7 @@ test.addObject ParticleSystem, {
 	particleSize: 30
 	particleLife: 55
 	scatter: .4
-}
+}, no
 
 test.addObject ParticleSystem, {
 	loc: new Vec2 200, 400
